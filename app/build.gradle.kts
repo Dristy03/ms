@@ -40,6 +40,6 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation ("net.sourceforge.jexcelapi:jxl:2.6.12")
-    implementation ("com.loopj.android:android-async-http:1.4.10")
+
+
 }
