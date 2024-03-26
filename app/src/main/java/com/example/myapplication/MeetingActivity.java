@@ -44,8 +44,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,6 +61,7 @@ public class MeetingActivity extends AppCompatActivity {
     private static final String CSV_FILE_NAME = "data.csv";
     String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/data.csv";
     List<Meeting> meetingList = new ArrayList<>();
+    List<Meeting> upcomingMeetings = new ArrayList<>();
     String line = "3:00PM,5:00PM,27/03/2024,Ananna,Standup,403";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +78,10 @@ public class MeetingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                writeToCSV();
-//               startActivity(new Intent(getApplicationContext(),DemoActivity.class));
+               // showData();
+                readData();
+              //writeToCSV();
+            //  startActivity(new Intent(getApplicationContext(),DemoActivity.class));
             }
         });
     }
@@ -155,7 +159,22 @@ public class MeetingActivity extends AppCompatActivity {
 
     private void showData() {
 
-        adapter = new Adapter(this,meetingList);
+        Date currentDate = new Date();
+
+        for (Meeting meeting : meetingList) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = null;
+            try {
+                date = sdf.parse(meeting.getDate());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (date.after(currentDate)) {
+                upcomingMeetings.add(meeting);
+            }
+        }
+
+        adapter = new Adapter(this,upcomingMeetings);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (position == 0) {
+            holder.progressBar.setVisibility(View.VISIBLE);
+            // Apply other styling as needed
+        }
         Meeting meeting = meetingList.get(position);
         String time = meeting.getStartTime()+"-"+meeting.getEndTime();
         String date = meeting.getDate();
@@ -53,6 +59,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         TextView date;
         TextView title;
         TextView originator;
+        ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +67,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             date = itemView.findViewById(R.id.dateTvId);
             title = itemView.findViewById(R.id.titleTvId);
             originator = itemView.findViewById(R.id.originatorTvId);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 }
